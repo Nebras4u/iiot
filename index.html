@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nebras Damsarkho</title>
+<script src="./assets/gauge.min.js"></script>
+<script src="./assets/socket.io-1.2.0.js"></script>
+<script src="./assets/jquery-1.11.1.js"></script>
+<script src="./assets/chart.min.js"></script>
+<style>
+.slidecontainer {
+  width: 99%;
+  text-align: center;
+  color:green;
+  font-size: 20px;
+  font-weight: bold;"
+}
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+table, th, td {
+  border: 0.5px solid blue;
+}
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 2px;
+  cursor: pointer;
+}
+
+.button0 {width: 50%;}
+.button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+
+.button1:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.button2 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+}
+
+.button2:hover {
+  background-color: #008CBA;
+  color: white;
+}
+body {
+        padding: 0px;
+        margin: 0;
+        background: #fff
+    }
+</style>
+</head>
+<body>
+  <canvas id="myChart" width="800" height="150"></canvas>
+<p style="font-size:22px"></p>
+<p id="date" style="font-size:20px"><script>document.getElementById('date').innerHTML = Date()</script>&#128516;</p>
+<h2>Industry 4.0, IIOT, NodeJS, MQTT, MongoDB, HMI(HTML), RealTime Chart.</h2>
+    <script>
+      $(function () {
+	  	var slider1 = document.getElementById("myRange1");
+		var output1 = document.getElementById("demo1");
+		var slider2 = document.getElementById("myRange2");
+		var output2 = document.getElementById("demo2");
+		var slider3 = document.getElementById("myRange3");
+		var output3 = document.getElementById("demo3");
+        var socket = io();
+			socket.on('slider1', function(msg){
+			  slider1.value = msg;
+        output1.innerHTML = msg;
+        document.getElementById('date').innerHTML = Date();
+        Xa.push(getTime());
+        Ya.push(msg);
+        myChart.update();
+        Xa.shift();
+        Ya.shift();
+        gauge.value=msg;
+        gauge.draw();
+        gaugePressure.value=msg;
+       gaugePressure.draw();
+			});
+			socket.on('slider2', function(msg){
+			  slider2.value = msg;
+			   output2.innerHTML = msg;
+         document.getElementById('date').innerHTML = Date();
+			});
+			socket.on('slider3', function(msg){
+			  slider3.value = msg;
+			   output3.innerHTML = msg;
+         document.getElementById('date').innerHTML = Date();
+			});
+			//slider1.oninput = function() {
+			socket.emit('slider1', slider1.value);
+			output1.innerHTML = slider1.value;
+      //document.getElementById('date').innerHTML = Date();
+			//}
+			slider2.oninput = function() {
+			socket.emit('slider2', slider2.value);
+			output2.innerHTML = slider2.value;
+      //document.getElementById('date').innerHTML = Date();
+		}
+			slider3.oninput = function() {
+			socket.emit('slider3', slider3.value);
+			output3.innerHTML = slider3.value;
+      //document.getElementById('date').innerHTML = Date();
+		}
+      });
+    </script>
+<table style="width:100%">
+  <tr>
+    <td>
+      <canvas id="canvasPressure"></canvas>
+      <script>
+          var gaugePressure = new RadialGauge({
+              renderTo: 'canvasPressure',
+              width: 300,
+              height: 300,
+              units: "1010 hPa",
+              startAngle: 70,
+              ticksAngle: 220,
+              colorPlate: "#ffffff",
+              colorUnits: "#3CA7DB",
+              colorNumbers: "#3CA7DB",
+              needleType: "arrow",
+              needleStart: 0,
+              needleEnd: 75,
+              needleWidth: 4,
+              needleCircleSize: 10,
+              needleCircleInner: false,
+              needleCircleOuter: true,
+              needleShadow: false,
+              colorNeedle: "#3CA7DB",
+              colorNeedleEnd: "#2698CE",
+              colorNeedleCircleOuter: "#3CA7DB",
+              colorNeedleCircleOuterEnd: "#3CA7DB",
+      //        barWidth: 5,
+      //        colorBarProgress: '#3CA7DB',
+      //        colorBar: '#A8D3D5',
+      
+              colorMajorTicks: ["#A8D3D5", "#ffffff", "#ffffff", "#ffffff", "#ffffff",
+                  "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#A8D3D5"],
+              colorMinorTicks: "#ffffff",
+      
+              // Вопрос в мин и макс значениях, при этих значениях анимация не работает
+              minValue: 0,
+              maxValue: 100,
+      
+              majorTicks: ["0","10","20","30","40","50","60","70","80","90","100"],
+              minorTicks: "10",
+              strokeTicks: true,
+      
+              highlights: [
+                  {
+                      "from": 0,
+                      "to": 100,
+                      "color": "#A8D3D5"
+                  }
+              ],
+              //
+              highlightsWidth: 25,
+              numbersMargin: 12,
+              animation: true,
+              animationRule: "linear",
+              valueBox: false,
+              borders: false,
+              borderShadowWidth: 0,
+              value: 17,
+              animateOnInit: true,
+              animatedValue: true,
+              listeners: {
+                  value: function(value) {
+                      this.update({ units: parseInt(value, 10) + ' C" ' });
+                  }
+              }
+          });
+          //gaugePressure.value=msg;
+          //gaugePressure.draw();
+          var timers = [];
+      </script>
+      </td>
+      <td>
+      <canvas id="linear-gauge"></canvas>
+      <script>
+      var gauge = new LinearGauge({
+          "renderTo": 'linear-gauge',
+          "width": 100,
+          "height": 300,
+          "minValue": -5,
+          "maxValue": 100,
+          "value": 40,
+          "units": false,
+          "exactTicks": true,
+          "majorTicks": [
+              -5,
+              0,
+              10,
+              20,
+              30,
+              40,
+          50,
+          60,
+          70,
+          80,
+          90,
+          100
+          ],
+          "minorTicks": 0,
+          "strokeTicks": true,
+          "animatedValue": false,
+          "animateOnInit": false,
+          "title": false,
+          "borders": true,
+          "numbersMargin": 1,
+          "valueInt": 3,
+          "valueDec": 2,
+          "majorTicksInt": 1,
+          "majorTicksDec": 0,
+          "animation": true,
+          "animationDuration": 0,
+          "animationRule": "cycle",
+          "colorPlate": "#fff",
+          "colorPlateEnd": "",
+          "colorMajorTicks": "#444",
+          "colorMinorTicks": "#666",
+          "colorTitle": "#888",
+          "colorUnits": "#888",
+          "colorNumbers": "#444",
+          "colorNeedle": "rgba(240,128,128,1)",
+          "colorNeedleEnd": "rgba(255,160,122,.9)",
+          "colorValueText": "#444",
+          "colorValueTextShadow": "rgba(0,0,0,0.3)",
+          "colorBorderShadow": "rgba(0,0,0,0.5)",
+          "colorBorderOuter": "#ddd",
+          "colorBorderOuterEnd": "#aaa",
+          "colorBorderMiddle": "#eee",
+          "colorBorderMiddleEnd": "#f0f0f0",
+          "colorBorderInner": "#fafafa",
+          "colorBorderInnerEnd": "#ccc",
+          "colorValueBoxRect": "#888",
+          "colorValueBoxRectEnd": "#666",
+          "colorValueBoxBackground": "#babab2",
+          "colorValueBoxShadow": "rgba(0,0,0,1)",
+          "colorNeedleShadowUp": "rgba(2,255,255,0.2)",
+          "colorNeedleShadowDown": "rgba(188,143,143,0.45)",
+          "colorBarStroke": "#222",
+          "colorBar": "#ccc",
+          "colorBarProgress": "#888",
+          "colorBarShadow": "#000",
+          "fontNumbers": "Arial",
+          "fontTitle": "Arial",
+          "fontUnits": "Arial",
+          "fontValue": "Arial",
+          "fontNumbersSize": 25,
+          "fontTitleSize": 24,
+          "fontUnitsSize": 22,
+          "fontValueSize": 26,
+          "fontNumbersStyle": "normal",
+          "fontTitleStyle": "normal",
+          "fontUnitsStyle": "normal",
+          "fontValueStyle": "normal",
+          "fontNumbersWeight": "normal",
+          "fontTitleWeight": "normal",
+          "fontUnitsWeight": "normal",
+          "fontValueWeight": "normal",
+          "needle": true,
+          "needleShadow": true,
+          "needleType": "arrow",
+          "needleStart": 300,
+          "needleEnd": 150,
+          "needleWidth": 8,
+          "borderOuterWidth": 1,
+          "borderMiddleWidth": 1,
+          "borderInnerWidth": 1,
+          "borderShadowWidth": 1,
+          "valueBox": true,
+          "valueBoxStroke": 1,
+          "valueBoxWidth": 0,
+          "valueText": "",
+          "valueTextShadow": true,
+          "valueBoxBorderRadius": 2.5,
+          "highlights": [
+              {
+                  "from": -5,
+                  "to": 0,
+                  "color": "#FF0000"
+              },
+              {
+                  "from": 0,
+                  "to": 25,
+                  "color": "#FFF000"
+              },
+              {
+                  "from": 25,
+                  "to": 50,
+                  "color": "#00FF00"
+              },
+              {
+                  "from": 50,
+                  "to": 75,
+                  "color": "#FFF000"
+              },
+              {
+                  "from": 75,
+                  "to": 100,
+                  "color": "#FF0000"
+              }
+          ],
+          "highlightsWidth": 15,
+          "barWidth": 0,
+          "barStrokeWidth": 0,
+          "barProgress": true,
+          "barShadow": 0,
+          "ticksAngle": 270,
+          "startAngle": 45,
+          "colorNeedleCircleOuter": "#f0f0f0",
+          "colorNeedleCircleOuterEnd": "#ccc",
+          "colorNeedleCircleInner": "#e8e8e8",
+          "colorNeedleCircleInnerEnd": "#f5f5f5",
+          "needleCircleSize": 10,
+          "needleCircleInner": true,
+          "needleCircleOuter": true,
+          "animationTarget": "needle",
+          "useMinPath": false,
+      });
+      //gauge.value=30;
+      //gauge.draw();
+      </script>`
+      </td>
+ 
+    <td><a>Display Analog Output from PLC S7-300: DB1.DBW0 = PQW272</a>
+		<div class="slidecontainer">
+		<input type="range" min="1" max="100" value="50" class="slider" id="myRange1">
+		<p>Value: <span id="demo1"></span></p>
+		</div>
+	</td>       </tr>
+    <td><a>Round Range Slider3</a>
+		<div class="slidecontainer">
+		<input type="range" min="1" max="100" value="50" class="slider" id="myRange2">
+		<p>Value: <span id="demo2"></span></p>
+		</div>
+	</td>
+    <td><a>Round Range Slider5</a>
+		<div class="slidecontainer">
+		<input type="range" min="1" max="100" value="50" class="slider" id="myRange3">
+		<p>Value: <span id="demo3"></span></p>
+		</div>
+	</td>
+  </tr>
+  <tr>
+    <td><p>Use the wihe button:</p>
+		<button class="button">Input Value: 10%</button>
+	</td>
+    <td>
+		<input type="number" id="usertext" name="usertext" required><br>
+		<button onclick="myFunctiontext()">Change it</button>
+		<input type="text" id="text22"><br>
+		<script>
+		function myFunctiontext() {
+		if(document.getElementById("usertext").value>100){document.getElementById("usertext").value=100;}
+		document.getElementById("text22").value = document.getElementById("usertext").value;
+		}
+		</script>
+	</td>
+    <td>
+		<form action="/action_page.php">
+	     <label for="cars">Choose a car:</label>
+	     <select name="cars" id="cars">
+		  <option value="volvo">Volvo</option>
+		  <option value="saab">Saab</option>
+		  <option value="opel">Opel</option>
+		  <option value="audi">Audi</option>
+	     </select>
+	     <input type="submit" value="Submit">
+	    </form>
+	</td>
+  </tr>
+  <tr>
+    <td>
+		<input id="button3" type="button" value="Change Dimensions"
+				onclick="changeDimensions()"/>
+		</td>
+    <td>
+	<input type="range" min="1" max="100" id="myRange21">
+<button onclick="myFunction3()">Get it</button>
+<p>RangeValue: <span id="RangeV"></span></p>
+<script>
+//function myFunction() {document.getElementById("myRange").value = "75";}
+function myFunction3() {document.getElementById("RangeV").innerHTML=document.getElementById("myRange21").value;}
+</script>
+	</td>
+    <td>
+	    <svg  width="100%" height="50">
+    <defs>
+      <linearGradient id="myLinearGradient1"
+                      x1="0%" y1="0%"
+                      x2="100%" y2="0%"
+                      spreadMethod="pad">
+        <stop offset="10%" stop-color="#00cc00" stop-opacity="1"/>
+        <stop offset="30%" stop-color="#006600" stop-opacity="1"/>
+        <stop offset="70%" stop-color="#cc0000" stop-opacity="1"/>
+        <stop offset="90%" stop-color="#000099" stop-opacity="1"/>
+      </linearGradient>
+    </defs>
+    <rect x="4" y="4" width="98%" height="20" rx="8" ry="10"
+       style="fill:url(#myLinearGradient1); stroke: #005000;
+              stroke-width: 3;" />
+    </svg>
+	</td>
+  </tr>
+  <tr>
+  <td>
+  <input type="range" min="1" max="100" id="myRange22">
+<button onclick="myFunction2()">Change it</button>
+  <input type="number" id="username2" >
+<script>
+function myFunction2() {
+if(document.getElementById("username2").value>100){document.getElementById("username2").value=100;}
+document.getElementById("myRange22").value = document.getElementById("username2").value;
+}
+</script>
+</td>
+
+</table>
+
+<script>
+    function changeDimensions() {
+        if(1==1){document.getElementById("button3").style.backgroundColor='red';}
+		else{document.getElementById("button3").style.backgroundColor='green';}}
+</script>
+
+
+
+
+</body>
+<script>
+  function getData(){
+      return Math.random();
+  }
+  function addZero(x,n){
+      while(x.toString().length<n){
+          x = "0" + x;
+      }
+      return x;
+  }
+  function getTime(){
+      var d = new Date();
+      var h = addZero(d.getHours(),2);
+      var m = addZero(d.getMinutes(),2);
+      var s = addZero(d.getSeconds(),2);
+      var ms = addZero(d.getMilliseconds(),3);
+      //var tt = h + ":" + m + ":" + s + ":" + ms;
+      var tt = h + ":" + m + ":" + s;
+      return tt;
+  }
+  Xa=[];
+  Ya=[];
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'line',//'bar',
+      data: {
+          labels: Xa,//['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          datasets: [{
+              label: '# of Votes',
+              data: Ya,//[12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                  'rgba(0, 255, 132, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(0, 255, 132, 1)'
+              ],
+              borderWidth: 1
+          }]
+      }
+  });
+
+  Xa[30]=0;
+  Ya[30]=0;
+
+  </script>
+</html>
