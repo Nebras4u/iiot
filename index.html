@@ -10,7 +10,7 @@
 <script src="./assets/chart.min.js"></script>
 <style>
 .slidecontainer {
-  width: 99%;
+  width: 50%;
   text-align: center;
   color:green;
   font-size: 20px;
@@ -18,7 +18,7 @@
 }
 .slider {
   -webkit-appearance: none;
-  width: 100%;
+  width: 50%;
   height: 15px;
   border-radius: 5px;
   background: #d3d3d3;
@@ -37,7 +37,7 @@
   appearance: none;
   width: 25px;
   height: 25px;
-  border-radius: 50%;
+  border-radius: 30%;
   background: #04AA6D;
   cursor: pointer;
 }
@@ -45,7 +45,7 @@
 .slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
-  border-radius: 50%;
+  border-radius: 30%;
   background: #04AA6D;
   cursor: pointer;
 }
@@ -66,7 +66,7 @@ table, th, td {
   cursor: pointer;
 }
 
-.button0 {width: 50%;}
+.button0 {width: 30%;}
 .button1 {
   background-color: white; 
   color: black; 
@@ -97,8 +97,8 @@ body {
 </head>
 <body>
   <canvas id="myChart" width="800" height="400"></canvas>
-<p style="font-size:22px"></p>
-<p id="date" style="font-size:20px"><script>document.getElementById('date').innerHTML = Date()</script>&#128516;</p>
+<p style="font-size:16px"></p>
+<p id="date" style="font-size:16px"><script>document.getElementById('date').innerHTML = Date()</script>&#128516;</p>
 <h2>Industry 4.0, IIOT, NodeJS, MQTT, MongoDB, HMI(HTML), RealTime Chart.</h2>
     <script>
       $(function () {
@@ -228,7 +228,7 @@ body {
       var gauge = new LinearGauge({
           "renderTo": 'linear-gauge',
           "width": 100,
-          "height": 300,
+          "height": 200,
           "minValue": -5,
           "maxValue": 100,
           "value": 40,
@@ -445,7 +445,7 @@ function myFunction3() {document.getElementById("RangeV").innerHTML=document.get
         <stop offset="90%" stop-color="#000099" stop-opacity="1"/>
       </linearGradient>
     </defs>
-    <rect x="4" y="4" width="98%" height="20" rx="8" ry="10"
+    <rect x="4" y="4" width="50%" height="20" rx="8" ry="10"
        style="fill:url(#myLinearGradient1); stroke: #005000;
               stroke-width: 3;" />
     </svg>
