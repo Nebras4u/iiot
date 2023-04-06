@@ -1,4 +1,4 @@
-# iot
+# IIoT
 This is my first project in IIoT with MQTT protocol and Mongodb charts...
 it's not finished but all Pis-of-Code working fine like:
 connecting Backend Server NodeJS with Mongodb NoSQL database with HTML as HMI via MQTT protocol to monitor Real-Time data and sending an alarms to Telegram app.
