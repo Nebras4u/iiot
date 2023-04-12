@@ -14,7 +14,7 @@
   text-align: center;
   color:green;
   font-size: 20px;
-  font-weight: bold;"
+  font-weight: bold;
 }
 .slider {
   -webkit-appearance: none;
@@ -96,7 +96,7 @@ body {
 </style>
 </head>
 <body>
-  <canvas id="myChart" width="900" height="400"></canvas>
+  <canvas id="myChart" width="20" height="10" style="border:1px solid" ></canvas>
 <p style="font-size:16px"></p>
 <p id="date" style="font-size:10px"><script>document.getElementById('date').innerHTML = Date()</script>&#128516;</p>
 <h2>Industry 4.0, IIOT, NodeJS, MQTT, MongoDB, HMI(HTML), RealTime Chart.</h2>
@@ -150,7 +150,7 @@ body {
 		}
       });
     </script>
-<table>// style="width:15%">
+<table>// style="width:30%">
   <tr>
     <td>
       <canvas id="canvasPressure"></canvas>
@@ -373,19 +373,19 @@ body {
  
     <td><a>Display Analog Output from PLC S7-300: DB1.DBW0 = PQW272</a>
 		<div class="slidecontainer">
-		<input type="range" min="1" max="100" value="50" class="slider" id="myRange1">
+		<input type="range" min="-1" max="100" value="-1" class="slider" id="myRange1">
 		<p>Value: <span id="demo1"></span></p>
 		</div>
 	</td>       </tr>
     <td><a>Round Range Slider3</a>
 		<div class="slidecontainer">
-		<input type="range" min="1" max="100" value="50" class="slider" id="myRange2">
+		<input type="range" min="-1" max="100" value="-1" class="slider" id="myRange2">
 		<p>Value: <span id="demo2"></span></p>
 		</div>
 	</td>
     <td><a>Round Range Slider5</a>
 		<div class="slidecontainer">
-		<input type="range" min="1" max="100" value="50" class="slider" id="myRange3">
+		<input type="range" min="-1" max="100" value="-1" class="slider" id="myRange3">
 		<p>Value: <span id="demo3"></span></p>
 		</div>
 	</td>
@@ -523,6 +523,6 @@ document.getElementById("myRange22").value = document.getElementById("username2"
   </script>
 
 
-<iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);width: 100vw;height: 100vh;"  src="https://charts.mongodb.com/charts-project-0-ihaji/embed/dashboards?id=642bfdb8-b90e-4785-8d45-55f1f90f6ee0&theme=dark&autoRefresh=true&maxDataAge=60&showTitleAndDesc=true&scalingWidth=fixed&scalingHeight=fixed"></iframe>
+<iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);width: 50vw;height: 50vh;"  src="https://charts.mongodb.com/charts-project-0-ihaji/embed/dashboards?id=642bfdb8-b90e-4785-8d45-55f1f90f6ee0&theme=dark&autoRefresh=true&maxDataAge=60&showTitleAndDesc=true&scalingWidth=fixed&scalingHeight=fixed"></iframe>
 
 </html>
